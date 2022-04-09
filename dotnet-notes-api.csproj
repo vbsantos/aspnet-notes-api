@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>dotnet_notes_api</RootNamespace>
+    <RootNamespace>NotesApi</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

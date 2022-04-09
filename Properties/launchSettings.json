@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "dotnet_notes_api": {
+    "NotesApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
