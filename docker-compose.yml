@@ -8,3 +8,27 @@ services:
     ports:
       - 5000:80
     container_name: dotnet-api-container
+    networks:
+      - dotnet-dev-bridge-network
+    depends_on:
+      - mongodb
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  mongodb:
+    image: mongo:latest
+    container_name: dotnet-api-mongodb-container
+    restart: unless-stopped
+    ports:
+      - 27017:27017 # pra acessar com o mongodb compass
+    volumes:
+      - dotnet-dev-database-data:/data/db
+    networks:
+      - dotnet-dev-bridge-network
+
+networks:
+  dotnet-dev-bridge-network:
+    driver: bridge
+
+volumes:
+  dotnet-dev-database-data:  

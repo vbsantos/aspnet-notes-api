@@ -1,6 +1,11 @@
+using NotesApi.Models;
+using NotesApi.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.Configure<NotesDatabaseSettings>(builder.Configuration.GetSection("NotesDatabase"));
+builder.Services.AddSingleton<NotesService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
