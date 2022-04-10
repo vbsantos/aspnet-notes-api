@@ -21,11 +21,21 @@ public class NotesService
     public async Task<Note?> GetAsync(string id) =>
         await _notesCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
-    public async Task CreateAsync(Note newNote) =>
+    public async Task CreateAsync(Note newNote)
+    {
+        newNote.CreatedAt = DateTime.UtcNow;
+        newNote.UpdatedAt = DateTime.UtcNow;
         await _notesCollection.InsertOneAsync(newNote);
+    }
 
-    public async Task UpdateAsync(string id, Note updatedNote) =>
-        await _notesCollection.ReplaceOneAsync(x => x.Id == id, updatedNote);
+    public async Task UpdateAsync(string id, Note updatedNote) {
+        var updateBuilder = Builders<Note>.Update
+            .Set("Title", updatedNote.Title)
+            .Set("Description", updatedNote.Description)
+            .Set("Content", updatedNote.Content)
+            .Set("UpdatedAt", DateTime.UtcNow);
+        await _notesCollection.UpdateOneAsync(n => n.Id == id, updateBuilder);
+    }
 
     public async Task RemoveAsync(string id) =>
         await _notesCollection.DeleteOneAsync(x => x.Id == id);
