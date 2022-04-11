@@ -23,18 +23,19 @@ public class NotesService
 
     public async Task CreateAsync(Note newNote)
     {
-        newNote.CreatedAt = DateTime.UtcNow;
-        newNote.UpdatedAt = DateTime.UtcNow;
+        var now = DateTime.UtcNow;
+        newNote.CreatedAt = now;
+        newNote.UpdatedAt = now;
         await _notesCollection.InsertOneAsync(newNote);
     }
 
     public async Task UpdateAsync(string id, Note updatedNote) {
-        var updateBuilder = Builders<Note>.Update
+        var updateDefinition = Builders<Note>.Update
             .Set("Title", updatedNote.Title)
             .Set("Description", updatedNote.Description)
             .Set("Content", updatedNote.Content)
             .Set("UpdatedAt", DateTime.UtcNow);
-        await _notesCollection.UpdateOneAsync(n => n.Id == id, updateBuilder);
+        await _notesCollection.UpdateOneAsync(x => x.Id == id, updateDefinition);
     }
 
     public async Task RemoveAsync(string id) =>
